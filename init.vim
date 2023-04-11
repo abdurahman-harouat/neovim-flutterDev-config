@@ -6,6 +6,9 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+"Set the encoding to UTF-8
+set encoding=UTF-8
+
 " Set leader to space
 let mapleader = "\<Space>"
 
@@ -31,6 +34,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " tokyonight theme
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
+Plug 'nvim-tree/nvim-web-devicons' " Recommended (for coloured icons)
+" Plug 'ryanoasis/vim-devicons' Icons without colours
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
+
+" adding icons to nerdTree
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()
 
 let g:coc_global_extensions = ['coc-flutter']
@@ -45,8 +55,11 @@ colorscheme tokyonight
 " Enable rainbow brackets
 let g:rainbow_active = 1
 
-" Open NERDTree with leader + n
-nmap <Leader>n :NERDTreeToggle<CR>
+" NERDTree Config
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 
 " flutter shortcodes
 nnoremap <leader>fr :CocCommand flutter.run<CR>
@@ -73,9 +86,6 @@ nnoremap <leader>ca <Cmd>lua vim.lsp.buf.code_action()<CR>
  " Open code actions for the selected visual range
 xnoremap <leader>ca <Cmd>lua vim.lsp.buf.range_code_action()<CR>
 
-" This will map Ctrl+c to copy the selected text to the system clipboard and Ctrl+v to paste from the system clipboard while in insert mode.
-inoremap <C-c> <Esc>"+y
-inoremap <C-v> <Esc>"+p
 
 " This will let me delete a full word in insert mode using shift+backspace 
 inoremap <S-BS> <C-o>db
@@ -83,3 +93,43 @@ inoremap <S-BS> <C-o>db
 " select a word or multiple words with shift+Ctrl+arrows 
 inoremap <C-S-Right> <Esc>viw
 inoremap <C-S-Left> <Esc>vib
+
+
+" Configure Bufferline
+"lua require('bufferline').setup{
+"  options = {
+"  	mode = "buffers",
+"  }
+"}
+
+" In your init.lua or init.vim
+set termguicolors
+lua << EOF
+require("bufferline").setup{
+	options = {
+		mode = "buffers",
+	}
+}
+EOF
+
+
+" Key mappings for Bufferline
+nnoremap <TAB> :BufferLineCycleNext<CR>
+nnoremap <S-TAB> :BufferLineCyclePrev<CR>
+
+" Key mapping to close the current buffer
+nnoremap <Space>x :bd<CR>
+
+
+" Key mappings for window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" Open terminal vertically
+nnoremap <Space>v :vsplit term://zsh<CR>
+
+" Open terminal horizontally
+nnoremap <Space>h :split term://zsh<CR>
+
